@@ -8,9 +8,9 @@ MediaPipe Framework support building application in C++, Android, and iOS.
 
 Before using MediaPipe Framework, familiarize yourself with the following concepts.
 
-- Packets
-- Graphs
-- Calculators
+- [Packets](./packets.md)
+- [Graphs](./graphs.md)
+- [Calculators](./calculators.md)
 
 ## Install MediaPipe Framework
 
