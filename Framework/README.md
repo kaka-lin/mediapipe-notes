@@ -1,5 +1,7 @@
 # MediaPipe Framework
 
+MediaPipe 是 Google 開源的一個 flow stream 處理框架，它支持在移動設備和桌面平台上實時進行影片、音訊、圖像等 data flow 的處理。
+
 `MediaPipe Framework` is the **low-level component** used to build efficient on-device machine learning pipelines, similar to the premade [MediaPipe Solutions](https://developers.google.com/mediapipe/solutions/guide.md).
 
 MediaPipe Framework support building application in C++, Android, and iOS.
