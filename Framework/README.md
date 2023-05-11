@@ -59,7 +59,7 @@ node {
 
 In C++
 
-```c++
+```cpp
 std::string proto = R"pbtxt(
   input_stream: "input"
   output_stream: "output"
@@ -78,14 +78,14 @@ std::string proto = R"pbtxt(
 
 再來我們需要 parse this string into [CalculatorGraphConfig](https://github.com/google/mediapipe/blob/master/mediapipe/framework/calculator.proto) object
 
-```c++
+```cpp
 CalculatorGraphConfig config =
   ParseTextProtoOrDie<CalculatorGraphConfig>(proto);
 ```
 
 Create MediaPipe Graph and intialize it with config
 
-```c++
+```cpp
 CalculatorGraph graph;
 MP_RETURN_IF_ERROR(graph.Initialize(config));
 ```
@@ -94,12 +94,12 @@ MP_RETURN_IF_ERROR(graph.Initialize(config));
 
 在我們開始運行 Graph 之前，我們要如何接收整個 Graph 的 output，這邊有兩種方法:
 
-1. `OutputStreamPoller`: synchronous logic
+1. [OutputStreamPoller]((https://github.com/google/mediapipe/blob/master/mediapipe/framework/output_stream_poller.h#L25)): synchronous logic
 2. `ObserveOutputStream`: a callback, asynchronous logic
 
 這邊範例使用 `OutputStreamPoller` 的方法來接收 Graph output，如下:
 
-```c++
+```cpp
 ASSIGN_OR_RETURN(OutputStreamPoller poller,
                  graph.AddOutputStreamPoller("output"));
 ```
@@ -108,7 +108,7 @@ ASSIGN_OR_RETURN(OutputStreamPoller poller,
 
 運行 Graph
 
-```c++
+```cpp
 MP_RETURN_IF_ERROR(graph.StartRun({}));
 ```
 
@@ -118,7 +118,7 @@ Graph 啟動後，通常以平行執行緒 (parallel threads) 等待 input data
 
 使用 [MakePacket](https://github.com/google/mediapipe/blob/master/mediapipe/framework/packet.h) 來創造 packet，並使用 `AddPacketToInputStream` 將 input packet 發送到 input stream，如下:
 
-```c++
+```cpp
 for (int i = 0; i < 10; ++i) {
   MP_RETURN_IF_ERROR(graph.AddPacketToInputStream("input",
                      MakePacket<std::string>("Hello World!").At(Timestamp(i))));
@@ -133,7 +133,7 @@ MP_RETURN_IF_ERROR(graph.CloseInputStream("input"));
 
 #### Step 5. Get the output packets
 
-```c++
+```cpp
 mediapipe::Packet packet;
 while (poller.Next(&packet)) {
   std::cout << packet.Timestamp() << ": RECEIVED PACKET " << packet.Get<double>() << std::endl;
@@ -142,11 +142,15 @@ while (poller.Next(&packet)) {
 
 #### Step 6. Finish Graph
 
-```c++
+```cpp
 // Wait for the graph to finish, and return graph status
 // = `MP_RETURN_IF_ERROR(graph.WaitUntilDone())` + `return mediapipe::OkStatus()`
 return graph.WaitUntilDone();
 ```
+
+## More Examples
+
+- [Example of MediaPipe FrameWork C++ API](./examples/README.md)
 
 ## Reference
 

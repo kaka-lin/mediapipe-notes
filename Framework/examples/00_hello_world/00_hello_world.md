@@ -55,7 +55,7 @@ Next, parse this string into a protobuf CalculatorGraphConfig object
 
 ```cpp
 CalculatorGraphConfig config =
-    ParseTextProtoOrDie<CalculatorGraphConfig>(k_proto);
+  ParseTextProtoOrDie<CalculatorGraphConfig>(k_proto);
 ```
 
 ## Step 2. Create MediaPipe Graph and initialize it with config
@@ -71,8 +71,8 @@ MP_RETURN_IF_ERROR(graph.Initialize(config));
 
 How do you recieve output packets from the graph (stream "output")?
 
-1. [OutputStreamPoller](https://github.com/google/mediapipe/blob/master/mediapipe/framework/output_stream_poller.h#L25) (synchronous logic)
-2. ObserveOutputStream (a callback, asynchronous logic)
+1. [OutputStreamPoller](https://github.com/google/mediapipe/blob/master/mediapipe/framework/output_stream_poller.h#L25): synchronous logic
+2. `ObserveOutputStream`: a callback, asynchronous logic
 
 In this example we using OutputStreamPoller. Create an `OutputStreamPoller` object that is connected to the output stream in order to later retrieve the graph output
 
@@ -93,12 +93,12 @@ MP_RETURN_IF_ERROR(graph.StartRun({}));
 
 Creates 10 input packets that contains the same string "Hello World!"
 
-Using `MakePacket`creates a packet. And unsing `AddPacketToInputStream` send this packet to the stream input.
+Using [MakePacket](https://github.com/google/mediapipe/blob/master/mediapipe/framework/packet.h) creates a packet. And unsing `AddPacketToInputStream` send this packet to the stream input.
 
 ```cpp
 for (int i = 0; i < 10; ++i) {
-    MP_RETURN_IF_ERROR(graph.AddPacketToInputStream("input",
-                       MakePacket<std::string>("Hello World!").At(Timestamp(i))));
+  MP_RETURN_IF_ERROR(graph.AddPacketToInputStream("input",
+                     MakePacket<std::string>("Hello World!").At(Timestamp(i))));
 }
 ```
 
