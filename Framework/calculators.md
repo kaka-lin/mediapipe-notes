@@ -83,16 +83,18 @@ class AddConstantCalculator : public CalculatorBase {
   int constant_;
 
   // 計算器的 GetContract() 函數，定義計算器的輸入輸出契約
-  static absl::Status GetContract(CalculatorContract* cc) {
+  static Status GetContract(CalculatorContract* cc) {
+    // specify a calculator with 1 input, 1 output, both of type double
     cc->Inputs().Tag(kInputTag).Set<int>();
     cc->Outputs().Tag(kOutputTag).Set<int>();
-    return absl::OkStatus();
+    return absl::OkStatus(); // Never forget to say "OK"!
   }
 
   // 計算器的初始化函數
   absl::Status Open(CalculatorContext* cc) override {
     // 從參數中讀取常數
-    constant_ = cc->Options<int>(kConstantTag);
+    auto options = cc->Options<AddConstantCalculatorOptions>();
+    constant_ = options.constant();
     return absl::OkStatus();
   }
 
@@ -103,7 +105,8 @@ class AddConstantCalculator : public CalculatorBase {
     }
     const int input = cc->Inputs().Tag(kInputTag).Get<int>();
     const int output = input + constant_;
-    cc->Outputs().Tag(kOutputTag).Add(output, cc->InputTimestamp());
+    Packet p_out = MakePacket<int>(output).At(cc->InputTimestamp());
+    cc->Outputs().Tag(kOutputTag).AddPacket(p_out);
     return absl::OkStatus();
   }
 };
@@ -136,3 +139,40 @@ node {
   }
 }
 ```
+
+詳細請看這: [mediapipe/kaka_examples/12_custom_calculator_2/custom_calculator.cc](https://github.com/kaka-lin/mediapipe/blob/kaka/mediapipe/kaka_examples/12_custom_calculator_2/custom_calculator.cc)
+
+如果要執行的話:
+
+1. Clone repo
+
+    ```sh
+    $ git clone https://github.com/kaka-lin/mediapipe.git
+    $ cd mediapipe
+    ```
+
+2. Run the command as below:
+
+    ```sh
+    $ bazel run --define MEDIAPIPE_DISABLE_GPU=1 \
+        mediapipe/kaka_examples/12_custom_calculator_2:custom_calculator
+    ```
+
+    Output
+
+    ```sh
+    Example 1.2.2 : Custom calculator...
+    0: RECEIVED PACKET 10
+    1: RECEIVED PACKET 11
+    2: RECEIVED PACKET 12
+    3: RECEIVED PACKET 13
+    4: RECEIVED PACKET 14
+    5: RECEIVED PACKET 15
+    6: RECEIVED PACKET 16
+    7: RECEIVED PACKET 17
+    8: RECEIVED PACKET 18
+    9: RECEIVED PACKET 19
+    10: RECEIVED PACKET 20
+    11: RECEIVED PACKET 21
+    12: RECEIVED PACKET 22
+    ```
