@@ -127,7 +127,7 @@ for (int i = 0; i < 10; ++i) {
 
 再來就是關閉 input stream "input" 以完成圖形運行。 此時會向 MediaPipe 發出信號，表示不會再有 packets sent to input stream "input"。
 
-```c++
+```cpp
 MP_RETURN_IF_ERROR(graph.CloseInputStream("input"));
 ```
 
