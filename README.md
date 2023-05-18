@@ -8,3 +8,7 @@ MediaPipe 有以下兩種:
 
 - [Solutions](./Solutions/README.md): 快速的建立一個機器學習應用程式
 - [Framework](./Framework/README.md): low-level component
+
+## Setup
+
+- [Android Setup](./Setup/android_setup.md)
