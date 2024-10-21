@@ -1,5 +1,11 @@
 # Calculators: Introduction
 
+> 2024/10/18 update:
+>
+> ```
+> 每個計算工具都是圖表節點 (Each calculator is a node of a graph)。
+> ```
+
 MediaPipe 中的 計算器(Calculator) 是實現各種 data stream 處理功能的基本單元，每個計算器都將數據從一個或多個輸入流讀取，經過內部運算後再將結果寫入一個或多個輸出流中。
 
 每個計算器都是 graph 中的一個節點(node)。 Graph 中的每一個節點都被實現為計算器，大部分 graph 執行發生在其計算器內部。計算器可以接收零個或多個 input stream and/or side packets 並產生零個或多個 output streams and/or side packets。
@@ -14,7 +20,7 @@ MediaPipe 的計算器通常是用 C++ 實現的，開發者可以通過繼承 `
 
     可以在 `GetContract()` 中指定計算器的預期輸入和輸出類型。 初始化圖形時，框架調用 static method 來驗證連接的輸入和輸出的 packets 類型是否與本規範中的一樣。
 
-- `Open()`: 初始化計算器。圖啟動後，框架會調用。
+- `Open()`: 初始化計算器。
 
     After a graph starts, the framework calls `Open()`. The input side packets are available to the calculator at this point. `Open()` interprets the node configuration operations (see Graphs) and prepares the calculator's per-graph-run state. This function may also write packets to calculator outputs. An error during `Open()` can terminate the graph run.
 

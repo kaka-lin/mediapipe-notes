@@ -2,7 +2,7 @@
 
 下面讓我們繼續來看 MediaPipe 中的計算器還有哪些功能或是可以調整的地方。
 
-## Identifying inputs and outputs
+## 識別輸入和輸出 (Identifying inputs and outputs)
 
 Calculator 的 public interface 由一組 input streams 和 output streams 組成。在 `CalculatorGraphConfiguration` 中，一些 calculator 的 output 會使用 `named streams` 接到其他 calculator 的 input。 Stream names 通常是小寫形式，而 input/output tags 通常是大寫形式。在下面的範例中，tag name: `VIDEO` 的輸出使用名為 `video_stream` (stream nameds) 的流連接到 tag name: `VIDEO_IN`
 

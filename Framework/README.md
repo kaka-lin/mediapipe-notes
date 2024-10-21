@@ -8,11 +8,21 @@ MediaPipe Framework support building application in C++, Android, and iOS.
 
 > If you want to build Python application, you need to use [pybund11](https://pybind11.readthedocs.io/en/stable/index.html)
 
-如果要更熟悉 MediaPipe Framework 可以看一下 `Framework concepts`:
+用 MediaPipe 架構之前，請先熟悉以下重要的架構概念：
 
-- [Packets](./packets.md)
-- [Graphs](./graphs.md)
-- [Calculators](./calculators.md)
+- [封包 (Packets)](./packets.md)
+
+    基本資料流程單位。封包是由數字時間戳記和「不可變更」酬載的共用指標組成。酬載可以是任何 C++ 類型，而酬載的類型也稱為封包的類型。封包是值類別，可以低成本複製。每個副本都會共用酬載的擁有權，以及參考計數語意。每個副本都有專屬的時間戳記。
+
+- [圖表 (Graphs)](./graphs.md)
+
+    MediaPipe 處理作業會在圖表中進行，其定義了`節點`之間的封包流路徑。圖表中可以有任意數量的輸入和輸出，資料流程也可以分支及合併。一般來說，資料會往前流動，但也有可能會回溯迴圈。
+
+- [節點 (Nodes)]()
+
+    節點會產生及/或使用封包，且封包是圖形處理大量工作的地方。基於歷史因素，這兩項指標也稱為「計算機」。 每個節點的介面會定義多個輸入和輸出`「通訊埠」ports`，您可以透過標記和/或索引加以識別
+
+- [計算機 (Calculators)](./calculators.md)
 
 ## Install MediaPipe Framework
 
