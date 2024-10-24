@@ -77,8 +77,13 @@ How do you recieve output packets from the graph (stream "output")?
 In this example we using OutputStreamPoller. Create an `OutputStreamPoller` object that is connected to the output stream in order to later retrieve the graph output
 
 ```cpp
-ASSIGN_OR_RETURN(OutputStreamPoller poller,
-                 graph.AddOutputStreamPoller("output"));
+// old version
+// ASSIGN_OR_RETURN(OutputStreamPoller poller,
+//                  graph.AddOutputStreamPoller("output"));
+
+// new api version
+MP_ASSIGN_OR_RETURN(OutputStreamPoller poller,
+                   graph.AddOutputStreamPoller("output"));
 ```
 
 ### Run the graph

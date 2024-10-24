@@ -99,8 +99,13 @@ MP_RETURN_IF_ERROR(graph.Initialize(config));
 這邊範例使用 `OutputStreamPoller` 的方法來接收 Graph output，如下:
 
 ```cpp
-ASSIGN_OR_RETURN(OutputStreamPoller poller,
-                 graph.AddOutputStreamPoller("output"));
+// old version
+// ASSIGN_OR_RETURN(OutputStreamPoller poller,
+//                  graph.AddOutputStreamPoller("output"));
+
+// new api version
+MP_ASSIGN_OR_RETURN(OutputStreamPoller poller,
+                   graph.AddOutputStreamPoller("output"));
 ```
 
 ## Step 3. Run the graph
