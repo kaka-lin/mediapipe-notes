@@ -1,7 +1,32 @@
-# 使用 C++ 建構圖表 (Building Graphs in C++)
+# 在 C++ 中建構圖表 (Building Graphs in C++)
+
+> 更多範例請至: [mediapipe/mediapipe/kaka_examples/graph_in_cpp](https://github.com/kaka-lin/mediapipe/tree/kaka/mediapipe/kaka_examples/graph_in_cpp)
+
+使用 C++ 建構圖表有兩種方法:
+
+- `CalculatorGraphConfig`:
+
+    是 Mediapie 的傳統方法，基於`靜態配置`來設置計計算圖。它使用 `protobuf` 格式的 CalculatorGraphConfig 來定義計算圖的結構和節點。主要特點包括:
+
+    - 靜態圖構建: 通過 `.pbtxt` 文件或手動定義的 `Protobuf` 格式來配置。
+    - 靈活性較低: 由於其為靜態配置文件，無法在運行時進行靈活的更改。
+    - 穩定且成熟: `CalculatorGraphConfig` 在 MediaPipe 中已被廣泛使用，適合各種傳統的計算場景。
+
+- `Graph Builder API`:
+
+     是 `MediaPipe Edge` 中引入的一種新方式，使用編程接口來`動態構建`計算圖。這種 API 提供了更靈活的圖形構建方式，允許開發者通過代碼設置節點和流，並且更接近於建構器模式（Builder Pattern）。
+
+    - 動態構建: `Graph Builder API` 可以在代碼中動態地添加和配置節點及流。
+    - 適合複雜場景: 由於圖可以在運行時構建和調整，它更適合需要動態變化的場景。
+    - 限制性依賴: `Graph Builder API` 是在 `MediaPipe Edge` 中引入的，因此可能僅在特定版本或 SDK 中可用。
+
+以下範例通通使用的是 `Graph Builder API`。如果想知道 `CalculatorGraphConfig` 請參閱。
+
+## Introduction of Graph builder AIP
 
 C++ 圖表建構工具 (graph builder) 是一款強大的工具，適用於:
 
+- 動態建構
 - 建構複雜的圖表 (Building complex graphs)
 - 參數化圖表，例如:
   - 在 InferenceCalculator 上設定`委派代表 (delegate)`
@@ -45,6 +70,15 @@ node {
 建構上述 `CalculatorGraphConfig` 的函式可能如下所示:
 
 ```cpp
+#include "mediapipe/framework/api2/builder.h"
+#include "mediapipe/framework/api2/port.h"
+
+using ::mediapipe::api2::Input;
+using ::mediapipe::api2::Output;
+using ::mediapipe::api2::SideInput;
+using ::mediapipe::api2::SideOutput;
+using ::mediapipe::api2::builder::Graph;
+
 CalculatorGraphConfig BuildGraph() {
   Graph graph;
 

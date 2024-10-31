@@ -53,7 +53,7 @@ node {
 }
 ```
 
-MediaPipe 可為複雜圖表提供替代的 C++ 表示法，例如: 機器學習管道 (ML pipelines)、處理模型中繼資料 (handling model metadata) 和選用節點 (optional nodes) 等。上圖看起來可能像這樣：
+MediaPipe 可為複雜圖表提供替代的 `C++` 表示法，例如: 機器學習管道 (ML pipelines)、處理模型中繼資料 (handling model metadata) 和選用節點 (optional nodes) 等。上圖看起來可能像這樣：
 
 ```cpp
 CalculatorGraphConfig BuildGraphConfig() {
@@ -80,6 +80,8 @@ CalculatorGraphConfig BuildGraphConfig() {
   return graph.GetConfig();
 }
 ```
+
+詳情請參閱在 [C++ 中建構圖表](./graphs_cplusplus.md)。
 
 ## Subgraph (子圖表)
 
