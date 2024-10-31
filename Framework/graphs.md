@@ -159,6 +159,58 @@ CalculatorGraphConfig BuildGraphConfig() {
     }
     ```
 
+### Build subgraph in C++
+
+```cpp
+class TwoPassThroughSubgraph : public Subgraph {
+ public:
+  absl::StatusOr<CalculatorGraphConfig> GetConfig(
+      SubgraphContext* context) override {
+    // 使用 Graph Builder API 構建子圖
+    Graph graph;
+
+    // Graph inputs
+    auto in = graph.In(0).SetName("out1");
+
+    // 定義第一個 PassThroughCalculator
+    auto& node1 = graph.AddNode("PassThroughCalculator");
+    in >> node1.In(0);
+    auto out2 = node1.Out(0);
+
+    // 定義第二個 PassThroughCalculator
+    auto& node2 = graph.AddNode("PassThroughCalculator");
+    out2 >> node2.In(0);
+    node2.Out(0).SetName("out3") >> graph.Out(0);
+
+    return graph.GetConfig();
+  }
+};
+REGISTER_MEDIAPIPE_GRAPH(TwoPassThroughSubgraph);
+
+CalculatorGraphConfig BuildGraphConfig() {
+    // 使用 Graph Builder API
+    Graph graph;
+
+    // Graph inputs
+    auto in= graph.In(0).SetName("in");
+
+    // 添加四個 PassThroughCalculator 並連接
+    auto& node1 = graph.AddNode("PassThroughCalculator");
+    in >> node1.In(0);
+    auto out1 = node1.Out(0);
+
+    auto& node2 = graph.AddNode("TwoPassThroughSubgraph");
+    out1 >> node2.In(0);
+    auto out3 = node2.Out(0);
+
+    auto& node4 = graph.AddNode("PassThroughCalculator");
+    out3 >> node4.In(0);
+    node4.Out(0).SetName("out") >> graph.Out(0);
+
+    return graph.GetConfig();
+}
+```
+
 ## Graph Options (圖表選項)
 
 It is possible to specify a `"graph options" `protobuf for a MediaPipe graph similar to the [Calculator Options](https://ai.google.dev/edge/mediapipe/framework/framework_concepts/calculators#calculator_options) protobuf specified for a MediaPipe calculator. These `"graph options"` can be specified where a graph is invoked, and used to populate `calculator options` and `subgraph options` within the graph.
