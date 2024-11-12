@@ -1,37 +1,16 @@
-# MediaPipe Solutions
+# MediaPipe Solutions (MediaPipe 解決方案指南)
 
-`MediaPipe Solutions` 可以讓你快速的建立一個機器學習應用程式，他提供一些 pre-built 的 processing pipelines 使用，也可用 `Model Maker` 來客製化自己的 solution (transfer learning on default models)。
+MediaPipe Solutions 提供一系列的程式庫(libraries)和工具，可讓你在應用程式中快速套用機器學習相關技術。你可以立即將這些解決方案插入應用程式且根據自身需求加以自訂，並用於多個開發平台。MediaPipe Solutions 屬於 [MediaPipe 開放原始碼專案](https://github.com/google-ai-edge/mediapipe)的一部分，因此可以根據應用程式需求進一步自訂解決方案程式碼。MediaPipe 解決方案套件包含下列項目：
 
-MediaPipe Solutions 整合了以下工具:
+![](images/solutions.png)
 
-- [MediaPipe Legacy Solutions](https://google.github.io/mediapipe/solutions/solutions)
-- [TensorFlow Lite Task Library](https://www.tensorflow.org/lite/inference_with_metadata/task_library/overview)
-- [TensorFlow Lite Model Maker](https://www.tensorflow.org/lite/models/modify/model_maker)
+These libraries and resources provide the core functionality for each MediaPipe Solution:
 
-且包含以下功能:
+- [MediaPipe Tasks](https://ai.google.dev/edge/mediapipe/solutions/tasks): Cross-platform APIs and libraries for deploying solutions.
+- `MediaPipe Models`: Pre-trained, ready-to-run models for use with each solution.
 
-- `MediaPipe Tasks`: Low-code API to create and deploy advanced ML solutions across platforms.
+這些工具可讓您自訂及評估解決方案：
 
-- `MediaPipe Model Maker`: Low-code API to customize solutions using your own data.
+- [MediaPipe Model Maker](https://ai.google.dev/edge/mediapipe/solutions/model_maker?hl=zh-tw): 使用自己的資料自訂解決方案的模型。
 
-- `MediaPipe Studio`: Visualize and benchmark solutions.
-
-### Setup guide for Python
-
-Building applications with MediaPipe Tasks requires the following development environment resources:
-
-- Python 3.7-3.10
-- PIP 19.0 or higher (>20.3 for macOS)
-- For Macs using Apple silicon M1 and M2 chips, use the Rosetta Translation Environment. See the [Apple documentation](https://developer.apple.com/documentation/apple-silicon/about-the-rosetta-translation-environment/) for more information on Rosetta setup and usage.
-
-Install the `MediaPipe package`:
-
-```bash
-$ pip install install mediapipe
-```
-
-After installing the package, import it into your development project.
-
-```python3
-import mediapipe as mp
-```
+- [MediaPipe Studio](https://ai.google.dev/edge/mediapipe/solutions/studio?hl=zh-tw): 在瀏覽器中以視覺化方式呈現、評估解決方案，以及進行基準測試。
