@@ -54,6 +54,8 @@
 
 安裝指定版本的 AS Bazel plugin，這裡注意請不要從 Marketplace下載，也不要隨意更新 Plugin。如下:
 
+> Android Studio > Settings
+
 ![](images/bazel-plugin.png)
 
 選擇剛剛所下載的 `.zip` 檔安裝即可。
